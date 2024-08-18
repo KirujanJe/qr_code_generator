@@ -1,0 +1,75 @@
+<!-- QR Generator Website by Kirujan Jegatheeswaran-->
+<!-- Stack: HTML5, Internal CSS, JS, qrcode.min.js library by David Shim / davidshimjs library-->
+<!-- 2024-06-01 -->
+ <!--https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js-->
+
+<!DOCTYPE html>
+<html lang ='en'>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> URL to QR Code Converter </title>
+        <link rel="icon" href="C:\Users\kiruj\OneDrive\Desktop\Projects\projec\qrcode logo for title icon.png" type="image/icon type">
+        <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+        <style>
+            body {display: flex; flex-direction: column;
+                 justify-content: center; align-items: center; text-align: center; 
+                 height: 100vh; margin:0;}
+            h1   {color: rgb(32, 79, 148); text-align: center;}
+            h5   {text-align: center;}
+            p    {color: rgb(153, 7, 7); text-align: center; font-size: small;}
+            .header {padding: 20px; background-color: rgb(217, 223, 190); color:black;
+                font-size: large; width:95%; position: relative;}
+            .qr_form_div {margin-bottom: 20px;}
+            .qrcode {margin-top: 20px;}
+        </style>
+    </head>
+    <body>
+        <div class = 'header'>
+            <h1> Generate a QR code </h1>
+            <h5><i>Tech: </i>HTML, CSS, JS & davidshimjs library </h5>
+            <h5><i> Author: </i> Kirujan Je </h5>
+            <p><b> Version 1 -- Date: June 01 2024 </b></p>
+        </div>
+        <br>
+        <br> 
+        <div class = "qr_form_div">
+        <form id="qr_form">
+            <label for = "url_input"><b> Enter your URL: </b></label>
+            <input type ="text" id="url_input" placeholder ="https//www.google.com" required>
+            <button type="submit"><b> Generate </b></button>
+        </form>
+        </div>
+        <div id="qrcode"></div>
+        <br>
+        <a id="download_link" style="display: none;"><b> Download </b></a>
+        <script> //js
+            document.getElementById('qr_form').addEventListener('submit', function(event) {
+                event.preventDefault(); // to prevent unwanted default form submission
+                // get user input & declare
+                var url = document.getElementById("url_input").value;
+                // clear content within qrccode div element, to generate new code
+                // avoid multiple codes stacking up in the div 
+                document.getElementById("qrcode").innerHTML = ' ';
+                // initialize QR code library and generate the code
+                // QRCode constructor in qrcode.min.js library
+                var qrcode = new QRCode(document.getElementById("qrcode"), {
+                    text: url,
+                    width: 128,
+                    height: 128,
+                });
+                // Now have to create download link
+                setTimeout(function() {
+                    var qr_img = document.querySelector('#qrcode img');
+                    if (qr_img){
+                        var download_link = document.getElementById('download_link');
+                        download_link.href = qr_img.src;
+                        download_link.download = "your_qrcode.png";
+                        download_link.style.display = "inline";
+                    }
+                }, 100) // timer for delay to generate code to download
+            });
+        </script>
+    </body>
+</html>
+<!-- End of Code -->
